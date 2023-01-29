@@ -22,7 +22,7 @@ RUN npm run prod
 FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/examfront /usr/share/nginx/html
+COPY --from=build /usr/local/app/dist/examfront /usr/share/nginx/html
 
 COPY /docker/nginx/nginx.conf /etc/nginx/conf.d
 COPY /docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
