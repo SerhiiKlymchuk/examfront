@@ -4,10 +4,10 @@
 FROM node:16.13.0 as build
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /usr/local/app
 
 # Add the source code to app
-COPY . .
+COPY ./ /usr/local/app/
 
 # Install all the dependencies
 RUN npm install
@@ -22,7 +22,10 @@ RUN npm run prod
 FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
-COPY --from=build /app/dist/examfront /usr/share/nginx/html
+COPY --from=build /usr/local/app/examfront /usr/share/nginx/html
+
+COPY /docker/nginx/nginx.conf /etc/nginx/conf.d
+COPY /docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
 EXPOSE 80
